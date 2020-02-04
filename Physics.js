@@ -5,10 +5,19 @@ import PipeTop from "./PipeTop"
 
 let pipes = 0;
 let pipeDeleted = 0;
+let pause = false;
 
 export const resetPipes = ()=>{
     pipes = 0
     pipeDeleted = 0
+}
+
+export const stopGame = ()=>{
+    pause = true;
+}
+
+export const startGame = ()=>{
+    pause = false;
 }
 
 //random function to return values between min and max parameters
@@ -66,54 +75,56 @@ export const addPipesAtLocation = (x, world, entities)=>{
 }
 
 const Physics = (entities, { touches, time, dispatch})=>{
-    let engine = entities.physics.engine;
-    let bird = entities.bird.body;
-    let world = entities.physics.world
+    if(!pause){
+        let engine = entities.physics.engine;
+        let bird = entities.bird.body;
+        let world = entities.physics.world
 
-    let hadTouches = false;
-    touches.forEach(t => {
-        if(!hadTouches){
-            if(world.gravity.y === 0.0){
-                world.gravity.y = 1.0;
-                addPipesAtLocation((Constants.MAX_WIDTH*2) - (Constants.PIPE_WIDTH), world, entities);
-                addPipesAtLocation((Constants.MAX_WIDTH*3) - (Constants.PIPE_WIDTH), world, entities);
-            }
-            Matter.Body.setVelocity( bird, {
-                x: bird.velocity.x,
-                y: -15
-            })
-        }
-    });
-
-    Matter.Engine.update(engine, time.delta);
-
-    Object.keys(entities).forEach(key => {
-        if(key.indexOf("pipe") === 0 && entities.hasOwnProperty(key)){
-            Matter.Body.translate(entities[key].body, {x: -2, y: 0});
-            if(key.indexOf("Top") !== -1){
-                if(entities[key].body.position.x < bird.position.x && !entities[key].scored){
-                    entities[key].scored = true;
-                    dispatch({ type: "score" })
+        let hadTouches = false;
+        touches.forEach(t => {
+            if(!hadTouches){
+                if(world.gravity.y === 0.0){
+                    world.gravity.y = 1.0;
+                    addPipesAtLocation((Constants.MAX_WIDTH*2) - (Constants.PIPE_WIDTH), world, entities);
+                    addPipesAtLocation((Constants.MAX_WIDTH*3) - (Constants.PIPE_WIDTH), world, entities);
                 }
+                Matter.Body.setVelocity( bird, {
+                    x: bird.velocity.x,
+                    y: -15
+                })
+            }
+        });
 
-                if(entities[key].body.position.x <= -1*Constants.PIPE_WIDTH/2){
-                    pipeDeleted = pipeDeleted + 1;
-                    delete(entities["pipe" + (pipeDeleted) + "Top"]);
-                    delete(entities["pipe" + (pipeDeleted)])
-    
-                    addPipesAtLocation(Constants.MAX_WIDTH*2, world, entities);
+        Matter.Engine.update(engine, time.delta);
+
+        Object.keys(entities).forEach(key => {
+            if(key.indexOf("pipe") === 0 && entities.hasOwnProperty(key)){
+                Matter.Body.translate(entities[key].body, {x: -2, y: 0});
+                if(key.indexOf("Top") !== -1){
+                    if(entities[key].body.position.x < bird.position.x && !entities[key].scored){
+                        entities[key].scored = true;
+                        dispatch({ type: "score" })
+                    }
+
+                    if(entities[key].body.position.x <= -1*Constants.PIPE_WIDTH/2){
+                        pipeDeleted = pipeDeleted + 1;
+                        delete(entities["pipe" + (pipeDeleted) + "Top"]);
+                        delete(entities["pipe" + (pipeDeleted)])
+        
+                        addPipesAtLocation(Constants.MAX_WIDTH*2, world, entities);
+                    }
+                }
+            }else if(key.indexOf("floor") === 0){
+                if(entities[key].body.position.x <= -1*Constants.MAX_WIDTH/2){
+                    Matter.Body.setPosition(entities[key].body, {x: Constants.MAX_WIDTH+(Constants.MAX_WIDTH/2), y: entities[key].body.position.y})
+                } else {
+                    Matter.Body.translate(entities[key].body, {x: -2, y: 0})
                 }
             }
-        }else if(key.indexOf("floor") === 0){
-            if(entities[key].body.position.x <= -1*Constants.MAX_WIDTH/2){
-                Matter.Body.setPosition(entities[key].body, {x: Constants.MAX_WIDTH+(Constants.MAX_WIDTH/2), y: entities[key].body.position.y})
-            } else {
-                Matter.Body.translate(entities[key].body, {x: -2, y: 0})
-            }
-        }
-    })
+        })
 
-    return entities;
+        return entities;
+    }
 }
 
 export default Physics

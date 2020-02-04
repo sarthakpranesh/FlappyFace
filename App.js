@@ -18,7 +18,7 @@ import Wall from "./Pipe"
 import Floor from "./Floor"
 
 //importing physics that are created to make the world interactive, has settings that make the world feel real
-import Physics, {resetPipes} from "./Physics"
+import Physics, {resetPipes, stopGame, startGame} from "./Physics"
 
 export default class App extends Component {
   //default constructor
@@ -58,11 +58,8 @@ export default class App extends Component {
     Matter.World.add(world, [bird, floor1, floor2]);
 
     Matter.Events.on(engine, "collisionStart", event=>{
-      //the below commented line can be used to broadcast an event called "game-over"
-      // this.gameEngine.dispatch({ type: "game-over"});
-      this.setState({
-        running: false //on collision we stop the game
-      })
+      //broadcast an event called "game-over"
+      this.gameEngine.dispatch({ type: "game-over"});
     })
 
     return {
@@ -78,6 +75,11 @@ export default class App extends Component {
       this.setState({
         score: this.state.score + 1
       })  
+    } else if(e.type === "game-over"){
+      stopGame()
+      this.setState({
+        running: false //on collision we stop the game
+      })
     }
   }
 
@@ -85,6 +87,7 @@ export default class App extends Component {
   //reset the game to play again
   reset = () =>{
     resetPipes();
+    startGame();
     this.gameEngine.swap(this.setupWorld())
     this.setState({
       running: true,
