@@ -84,14 +84,16 @@ const Physics = (entities, { touches, time, dispatch})=>{
         touches.forEach(t => {
             if(!hadTouches){
                 if(world.gravity.y === 0.0){
-                    world.gravity.y = 1.0;
+                    world.gravity.y = 1.2;
                     addPipesAtLocation((Constants.MAX_WIDTH*2) - (Constants.PIPE_WIDTH), world, entities);
                     addPipesAtLocation((Constants.MAX_WIDTH*3) - (Constants.PIPE_WIDTH), world, entities);
                 }
-                Matter.Body.setVelocity( bird, {
-                    x: bird.velocity.x,
-                    y: -15
-                })
+                if(!(bird.position.y < 20)){
+                    Matter.Body.setVelocity( bird, {
+                        x: bird.velocity.x,
+                        y: -6
+                    })
+                }
             }
         });
 
