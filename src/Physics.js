@@ -104,7 +104,7 @@ const Physics = (entities, {touches, time, dispatch}) => {
         if (!(bird.position.y < 20)) {
           Matter.Body.setVelocity(bird, {
             x: bird.velocity.x,
-            y: -16,
+            y: -8,
           });
         }
       }
