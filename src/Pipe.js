@@ -9,7 +9,7 @@ export default class Pipe extends Component {
     const x = this.props.body.position.x - width / 2;
     const y = this.props.body.position.y - height / 2;
 
-    let image = require('./assets/pipe.png');
+    let image = require('../assets/pipe.png');
 
     return (
       <Image
