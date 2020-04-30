@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 2,
     zIndex: 100,
-    fontFamily: 'monospace',
   },
   fullScreenButton: {
     position: 'absolute',
@@ -196,11 +195,9 @@ const styles = StyleSheet.create({
   gameOverText: {
     color: 'white',
     fontSize: 48,
-    fontFamily: 'monospace',
   },
   gameOverSubText: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'monospace',
   },
 });
