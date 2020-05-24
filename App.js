@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 
 //importing other files and libs
 import Constants from './src/Constant'; //setup some fixed properties in the file
@@ -19,9 +12,6 @@ import Floor from './src/Floor';
 
 //importing physics that are created to make the world interactive, has settings that make the world feel real
 import Physics, {resetPipes, stopGame, startGame} from './src/Physics';
-
-// useful constants
-const {width, height} = Dimensions.get('window');
 
 export default class App extends Component {
   constructor(props) {

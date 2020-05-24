@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {Image} from 'react-native';
+import birdImage from '../assets/bird2.png';
 
 export default class Bird extends Component {
   constructor(props) {
@@ -12,8 +13,6 @@ export default class Bird extends Component {
     const x = this.props.body.position.x - width / 2;
     const y = this.props.body.position.y - height / 2;
 
-    let image = require('../assets/bird2.png');
-
     return (
       <Image
         style={{
@@ -24,7 +23,7 @@ export default class Bird extends Component {
           height: height,
         }}
         resizeMode="contain"
-        source={image}
+        source={birdImage}
       />
     );
   }
