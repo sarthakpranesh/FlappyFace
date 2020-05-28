@@ -28,7 +28,7 @@ export default class Floor extends Component {
               style={{width: width, height: height}}
               key={idx}
               resizeMode="stretch"
-              source={require('../assets/floor.png')}
+              source={require('../../assets/floor.png')}
             />
           );
         })}

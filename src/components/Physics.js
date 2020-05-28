@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import Constants from './Constant';
+import Constants from '../Constant';
 import Pipes from './Pipe';
 import PipeTop from './PipeTop';
 
