@@ -15,6 +15,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^7.1.0",
     "@react-native-firebase/auth": "^7.1.0",
+    "@react-native-firebase/firestore": "^7.1.0",
     "@react-navigation/native": "^5.5.0",
     "@react-navigation/stack": "^5.4.1",
     "matter-js": "^0.14.2",

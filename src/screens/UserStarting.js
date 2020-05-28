@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   googleButton: {
+    position: 'absolute',
+    bottom: 0,
     width: Constants.MAX_WIDTH - 100,
     height: 48,
     alignSelf: 'center',

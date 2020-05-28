@@ -53,7 +53,7 @@ export default class GameHome extends Component {
     this.props.navigation.addListener('focus', () => {
       if (this.translateBirdX !== 0) {
         Animated.timing(this.onPlay, {
-          duration: 1000,
+          duration: 500,
           toValue: 0,
           useNativeDriver: true,
         }).start(() => {
@@ -89,7 +89,9 @@ export default class GameHome extends Component {
       duration: 1000,
       toValue: 2,
       useNativeDriver: true,
-    }).start();
+    }).start(() => {
+      this.props.navigation.navigate('LeaderBoard');
+    });
   }
 
   onExitApp() {

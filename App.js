@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import UserStarting from './src/screens/UserStarting.js';
 import GameHome from './src/screens/GameHome.js';
 import Play from './src/screens/Play.js';
+import LeaderBoard from './src/screens/Leaderboard.js';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,13 @@ function DefaultStack() {
         }}
         name="Play"
         component={Play}
+      />
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="LeaderBoard"
+        component={LeaderBoard}
       />
     </Stack.Navigator>
   );
