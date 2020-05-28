@@ -10,6 +10,7 @@ import {
   BackHandler,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import auth from '@react-native-firebase/auth';
 
 import Constants from '../Constant.js';
 
@@ -42,6 +43,11 @@ export default class GameHome extends Component {
   }
 
   componentDidMount() {
+    auth().onAuthStateChanged(user => {
+      if (!user) {
+        this.props.navigation.navigate('Start');
+      }
+    });
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: new Animated.Value(1),
@@ -118,7 +124,7 @@ export default class GameHome extends Component {
           resizeMode="stretch"
         />
         <Animated.View style={[styles.logout, {opacity: this.buttonOpacity}]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => auth().signOut()}>
             <Icon name="log-out" size={24} color="black" />
           </TouchableOpacity>
         </Animated.View>
