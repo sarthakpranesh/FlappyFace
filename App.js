@@ -4,13 +4,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // importing screens
+import UserStarting from './src/screens/UserStarting.js';
 import GameHome from './src/screens/GameHome.js';
 
 const Stack = createStackNavigator();
 
 function DefaultStack() {
   return (
-    <Stack.Navigator initialRouteName="Home" headerMode="none">
+    <Stack.Navigator initialRouteName="Start" headerMode="none">
+      <Stack.Screen name="Start" component={UserStarting} />
       <Stack.Screen name="Home" component={GameHome} />
     </Stack.Navigator>
   );
