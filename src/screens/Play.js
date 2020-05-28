@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 //importing other files and libs
 import Constants from '../Constant.js'; //setup some fixed properties in the file
@@ -26,8 +29,42 @@ export default class Play extends Component {
     this.state = {
       running: true,
       score: 0,
+      uid: auth().currentUser.uid,
     };
   }
+
+  updateUserScore = score => {
+    const {uid} = this.state;
+    firestore()
+      .collection('leaderboard')
+      .doc(uid)
+      .get()
+      .then(snap => {
+        if (snap.exists) {
+          const data = snap.data();
+          if (data.score < score) {
+            firestore()
+              .collection('leaderboard')
+              .doc(uid)
+              .update({
+                score,
+              });
+          }
+          return;
+        } else {
+          firestore()
+            .collection('leaderboard')
+            .doc(uid)
+            .set({
+              name: auth().currentUser.displayName,
+              score,
+            });
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   setupWorld = () => {
     let engine = Matter.Engine.create({enableSleeping: false}); //creates the world engine
@@ -83,6 +120,7 @@ export default class Play extends Component {
       this.setState({
         running: false, //on collision we stop the game
       });
+      this.updateUserScore(this.state.score);
     }
   };
 
@@ -117,11 +155,18 @@ export default class Play extends Component {
         />
         <Text style={styles.score}>{this.state.score}</Text>
         {!this.state.running && (
-          <View style={styles.fullScreenButton}>
-            <View style={styles.fullScreen}>
-              <Text style={styles.gameOverText}>Game Over</Text>
-              <TouchableOpacity onPress={this.reset}>
-                <Text style={styles.gameOverSubText}>Try Again</Text>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>Game Over</Text>
+            <TouchableOpacity onPress={this.reset}>
+              <Text style={styles.gameOverSubText}>Try Again</Text>
+            </TouchableOpacity>
+            <View style={{position: 'absolute', bottom: 10}}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.reset();
+                  this.props.navigation.goBack();
+                }}>
+                <Icon name="x" size={24} color="white" />
               </TouchableOpacity>
             </View>
           </View>
@@ -167,21 +212,15 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
     zIndex: 100,
   },
-  fullScreenButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flex: 1,
-  },
   fullScreen: {
+    flex: 1,
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0,0,0, 0.8)',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },

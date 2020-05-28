@@ -74,7 +74,7 @@ export default class LeaderBoard extends Component {
                     },
                   ]}>
                   <Text style={styles.flatListText}>Name</Text>
-                  <Text style={styles.flatListText}>High Score</Text>
+                  <Text style={styles.flatListText}>Score</Text>
                 </View>
               );
             }}

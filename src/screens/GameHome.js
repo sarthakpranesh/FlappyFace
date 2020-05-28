@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 import Constants from '../Constant.js';
 
@@ -17,7 +18,6 @@ export default class GameHome extends Component {
     super(props);
 
     this.onLoad = new Animated.Value(0);
-    this.onExit = new Animated.Value(0);
     this.onPlay = new Animated.Value(0);
     this.translateBirdY = this.onLoad.interpolate({
       inputRange: [0, 1, 2],
@@ -27,18 +27,17 @@ export default class GameHome extends Component {
     this.buttonOpacity = this.onLoad.interpolate({
       inputRange: [0, 1, 2],
       outputRange: [0, 1, 0],
-    });
-    this.translateBirdX = this.onExit.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, Constants.MAX_WIDTH],
+      extrapolate: 'clamp',
     });
     this.translateBirdX = this.onPlay.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, -Constants.MAX_WIDTH / 4],
+      inputRange: [-1, 0, 1],
+      outputRange: [Constants.MAX_WIDTH, 0, -Constants.MAX_WIDTH / 4],
+      extrapolate: 'clamp',
     });
     this.scaleBird = this.onPlay.interpolate({
       inputRange: [0, 1],
       outputRange: [1, 0.44],
+      extrapolate: 'clamp',
     });
   }
 
@@ -100,9 +99,9 @@ export default class GameHome extends Component {
       toValue: 0,
       useNativeDriver: true,
     }).start(() => {
-      Animated.timing(this.onExit, {
+      Animated.timing(this.onPlay, {
         duration: 1000,
-        toValue: 1,
+        toValue: -1,
         useNativeDriver: true,
       }).start(() => {
         BackHandler.exitApp();
@@ -118,6 +117,11 @@ export default class GameHome extends Component {
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
+        <Animated.View style={[styles.logout, {opacity: this.buttonOpacity}]}>
+          <TouchableOpacity>
+            <Icon name="log-out" size={24} color="black" />
+          </TouchableOpacity>
+        </Animated.View>
         <Animated.Image
           source={require('../../assets/bird2.png')}
           resizeMode="contain"
@@ -170,6 +174,11 @@ const styles = StyleSheet.create({
     right: 0,
     width: Constants.MAX_WIDTH,
     height: Constants.MAX_HEIGHT,
+  },
+  logout: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   birdImage: {
     width: 100,
