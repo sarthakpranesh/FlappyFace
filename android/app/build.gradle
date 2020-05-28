@@ -1,9 +1,4 @@
 apply plugin: "com.android.application"
-project.ext.vectoricons = [
-    iconFontNames: [ 'Feather.ttf' ]
-]
-
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
 
@@ -196,6 +191,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-splash-screen')
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules

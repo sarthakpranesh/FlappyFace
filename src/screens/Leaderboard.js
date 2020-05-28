@@ -69,7 +69,6 @@ export default class LeaderBoard extends Component {
                     {
                       borderBottomColor: 'white',
                       borderBottomWidth: 1,
-                      marginBottom: 10,
                     },
                   ]}>
                   <Text style={styles.flatListText}>Name</Text>
@@ -129,15 +128,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    marginVertical: 5,
   },
   flatListText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 10,
+    fontFamily: 'cusFont',
     overflow: 'hidden',
   },
   flatListSeparator: {
     borderBottomColor: 'rgba(255,255,255, 0.2)',
     borderBottomWidth: 1,
-    paddingBottom: 10,
   },
 });

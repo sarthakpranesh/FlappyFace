@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {View, Image, StyleSheet, ToastAndroid} from 'react-native';
+import {View, Image, StyleSheet, ToastAndroid, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import SplashScreen from 'react-native-splash-screen';
 
 GoogleSignin.configure({
   webClientId:
@@ -14,7 +15,6 @@ GoogleSignin.configure({
 
 // import Constants
 import Constants from '../Constant.js';
-import Animated from 'react-native-reanimated';
 
 export default class UserStarting extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ export default class UserStarting extends Component {
       if (user) {
         this.props.navigation.navigate('Home');
       }
+      SplashScreen.hide();
     });
   }
 
@@ -64,7 +65,7 @@ export default class UserStarting extends Component {
           resizeMode="contain"
           style={styles.birdImage}
         />
-        <Animated.Text style={styles.gameName}>Flappy Bird</Animated.Text>
+        <Text style={styles.gameName}>Flappy Bird</Text>
         <GoogleSigninButton
           style={styles.googleButton}
           size={GoogleSigninButton.Size.Wide}
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: Constants.MAX_HEIGHT / 2 + 50,
     color: 'black',
-    fontSize: Constants.MAX_WIDTH / 8,
-    fontWeight: 'bold',
+    fontSize: Constants.MAX_WIDTH / 14,
+    fontFamily: 'cusFont',
     zIndex: 2,
   },
   googleButton: {

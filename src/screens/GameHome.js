@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -129,16 +128,6 @@ export default class GameHome extends Component {
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
-        <Animated.View style={[styles.logout, {opacity: this.buttonOpacity}]}>
-          <TouchableOpacity
-            onPress={async () => {
-              await GoogleSignin.revokeAccess();
-              await GoogleSignin.signOut();
-              auth().signOut();
-            }}>
-            <Icon name="log-out" size={24} color="black" />
-          </TouchableOpacity>
-        </Animated.View>
         <Animated.Image
           source={require('../../assets/bird.png')}
           resizeMode="contain"
@@ -170,6 +159,15 @@ export default class GameHome extends Component {
             onPress={() => this.onExitApp()}>
             <Text style={styles.buttonText}>Exit</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={async () => {
+              await GoogleSignin.revokeAccess();
+              await GoogleSignin.signOut();
+              auth().signOut();
+            }}>
+            <Text style={styles.buttonText}>LogOut</Text>
+          </TouchableOpacity>
         </Animated.View>
       </View>
     );
@@ -197,12 +195,17 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
   },
+  logoutText: {
+    color: 'white',
+    fontSize: 10,
+    fontFamily: 'cusFont',
+  },
   birdImage: {
     alignSelf: 'center',
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: Constants.MAX_HEIGHT / 4,
+    bottom: Constants.MAX_HEIGHT / 5,
     width: Constants.MAX_WIDTH - 80,
     paddingVertical: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -222,5 +225,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    fontFamily: 'cusFont',
   },
 });

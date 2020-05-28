@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -169,7 +168,7 @@ export default class Play extends Component {
                   this.reset();
                   this.props.navigation.goBack();
                 }}>
-                <Icon name="x" size={24} color="white" />
+                <Text style={styles.closeBtn}>x</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -208,6 +207,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     color: 'white',
     fontSize: 72,
+    fontFamily: 'cusFont',
     top: 30,
     alignSelf: 'center',
     textShadowColor: '#444444',
@@ -229,10 +229,17 @@ const styles = StyleSheet.create({
   },
   gameOverText: {
     color: 'white',
-    fontSize: 48,
+    fontSize: Constants.MAX_WIDTH / 10,
+    fontFamily: 'cusFont',
   },
   gameOverSubText: {
     color: 'white',
-    fontSize: 24,
+    fontSize: Constants.MAX_WIDTH / 16,
+    fontFamily: 'cusFont',
+  },
+  closeBtn: {
+    color: 'white',
+    fontSize: Constants.MAX_HEIGHT / 16,
+    fontFamily: 'cusFont',
   },
 });
