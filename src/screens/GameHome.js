@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 import Constants from '../Constant.js';
 
@@ -124,7 +125,12 @@ export default class GameHome extends Component {
           resizeMode="stretch"
         />
         <Animated.View style={[styles.logout, {opacity: this.buttonOpacity}]}>
-          <TouchableOpacity onPress={() => auth().signOut()}>
+          <TouchableOpacity
+            onPress={async () => {
+              await GoogleSignin.revokeAccess();
+              await GoogleSignin.signOut();
+              auth().signOut();
+            }}>
             <Icon name="log-out" size={24} color="black" />
           </TouchableOpacity>
         </Animated.View>

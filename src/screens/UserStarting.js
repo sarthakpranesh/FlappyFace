@@ -14,6 +14,7 @@ GoogleSignin.configure({
 
 // import Constants
 import Constants from '../Constant.js';
+import Animated from 'react-native-reanimated';
 
 export default class UserStarting extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ export default class UserStarting extends Component {
           resizeMode="contain"
           style={styles.birdImage}
         />
+        <Animated.Text style={styles.gameName}>Flappy Bird</Animated.Text>
         <GoogleSigninButton
           style={styles.googleButton}
           size={GoogleSigninButton.Size.Wide}
@@ -89,16 +91,30 @@ const styles = StyleSheet.create({
     right: 0,
     width: Constants.MAX_WIDTH,
     height: Constants.MAX_HEIGHT,
+    zIndex: 1,
   },
   birdImage: {
-    width: 100,
+    position: 'absolute',
     alignSelf: 'center',
+    height: Constants.MAX_HEIGHT,
+    width: 100,
+    zIndex: 2,
+  },
+  gameName: {
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: Constants.MAX_HEIGHT / 2 + 50,
+    color: 'black',
+    fontSize: Constants.MAX_WIDTH / 8,
+    fontWeight: 'bold',
+    zIndex: 2,
   },
   googleButton: {
     position: 'absolute',
-    bottom: 0,
+    alignSelf: 'center',
+    top: Constants.MAX_HEIGHT - 58,
     width: Constants.MAX_WIDTH - 100,
     height: 48,
-    alignSelf: 'center',
+    zIndex: 3,
   },
 });
