@@ -1,144 +1,164 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Easing,
+  Animated,
+  TouchableOpacity,
+  BackHandler,
+} from 'react-native';
 
-//importing other files and libs
-import Constants from '../Constant.js'; //setup some fixed properties in the file
-import {GameEngine} from 'react-native-game-engine'; //game engine for our app
-import Matter from 'matter-js'; //physics library
+import Constants from '../Constant.js';
 
-//importing actual objects, these components are used to display different spaces on the screen
-import Bird from '../components/Bird.js';
-import Floor from '../components/Floor.js';
-
-//importing physics that are created to make the world interactive, has settings that make the world feel real
-import Physics, {
-  resetPipes,
-  stopGame,
-  startGame,
-} from '../components/Physics.js';
-
-export default class App extends Component {
+export default class GameHome extends Component {
   constructor(props) {
-    super(props); //App is extending class Components hence super(props) passes the props to the Component class
-    this.gameEngine = null;
-    this.entities = this.setupWorld(); //used to set the Engine World up
+    super(props);
 
-    this.state = {
-      running: true,
-      score: 0,
-    };
+    this.onLoad = new Animated.Value(0);
+    this.onExit = new Animated.Value(0);
+    this.onPlay = new Animated.Value(0);
+    this.translateBirdY = this.onLoad.interpolate({
+      inputRange: [0, 1, 2],
+      outputRange: [0, -Constants.MAX_HEIGHT / 6, -Constants.MAX_HEIGHT / 3],
+      extrapolate: 'clamp',
+    });
+    this.buttonOpacity = this.onLoad.interpolate({
+      inputRange: [0, 1, 2],
+      outputRange: [0, 1, 0],
+    });
+    this.translateBirdX = this.onExit.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, Constants.MAX_WIDTH],
+    });
+    this.translateBirdX = this.onPlay.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -Constants.MAX_WIDTH / 4],
+    });
+    this.scaleBird = this.onPlay.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 0.44],
+    });
   }
 
-  setupWorld = () => {
-    let engine = Matter.Engine.create({enableSleeping: false}); //creates the world engine
-    let world = engine.world; //creates the world
-    world.gravity.y = 0;
+  componentDidMount() {
+    Animated.timing(this.onLoad, {
+      duration: 1000,
+      toValue: new Animated.Value(1),
+      useNativeDriver: true,
+      easing: Easing.bounce,
+    }).start();
 
-    //different bodies in the world, inform of rectangles ( isStatic is set to true for making bodies on which physics don't apply )
-    let bird = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 4,
-      Constants.MAX_HEIGHT / 2,
-      Constants.BIRD_WIDTH,
-      Constants.BIRD_HEIGHT,
-    );
-    let floor1 = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 2,
-      Constants.MAX_HEIGHT - 25,
-      Constants.MAX_WIDTH + 4,
-      50,
-      {isStatic: true},
-    );
-
-    let floor2 = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 2 + Constants.MAX_WIDTH,
-      Constants.MAX_HEIGHT - 25,
-      Constants.MAX_WIDTH + 4,
-      50,
-      {isStatic: true},
-    );
-
-    //adding all the bodies to our game world
-    Matter.World.add(world, [bird, floor1, floor2]);
-
-    Matter.Events.on(engine, 'collisionStart', event => {
-      //broadcast an event called "game-over"
-      this.gameEngine.dispatch({type: 'game-over'});
+    this.props.navigation.addListener('focus', () => {
+      if (this.translateBirdX !== 0) {
+        Animated.timing(this.onPlay, {
+          duration: 1000,
+          toValue: 0,
+          useNativeDriver: true,
+        }).start(() => {
+          Animated.timing(this.onLoad, {
+            duration: 1000,
+            toValue: new Animated.Value(1),
+            useNativeDriver: true,
+            easing: Easing.bounce,
+          }).start();
+        });
+      }
     });
+  }
 
-    return {
-      physics: {engine: engine, world: world},
-      bird: {body: bird, pose: 1, renderer: Bird},
-      floor1: {body: floor1, renderer: Floor},
-      floor2: {body: floor2, renderer: Floor},
-    };
-  };
-
-  onEvent = e => {
-    if (e.type === 'score') {
-      this.setState({
-        score: this.state.score + 1,
+  onPlayApp() {
+    Animated.timing(this.onLoad, {
+      duration: 1000,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(this.onPlay, {
+        duration: 1000,
+        toValue: 1,
+        useNativeDriver: true,
+      }).start(() => {
+        this.props.navigation.navigate('Play');
       });
-    } else if (e.type === 'game-over') {
-      stopGame();
-      this.setState({
-        running: false, //on collision we stop the game
-      });
-    }
-  };
-
-  //reset the game to play again
-  reset = () => {
-    resetPipes();
-    startGame();
-    this.gameEngine.swap(this.setupWorld());
-    this.setState({
-      running: true,
-      score: 0,
     });
-  };
+  }
 
-  renderGame = () => {
+  onLeaderBoardPress() {
+    Animated.timing(this.onLoad, {
+      duration: 1000,
+      toValue: 2,
+      useNativeDriver: true,
+    }).start();
+  }
+
+  onExitApp() {
+    Animated.timing(this.onLoad, {
+      duration: 1000,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(this.onExit, {
+        duration: 1000,
+        toValue: 1,
+        useNativeDriver: true,
+      }).start(() => {
+        BackHandler.exitApp();
+      });
+    });
+  }
+
+  render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.viewContainer}>
         <Image
           source={require('../../assets/background-day.png')}
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
-        <GameEngine
-          ref={ref => {
-            this.gameEngine = ref;
-          }}
-          style={StyleSheet.gameContainer}
-          systems={[Physics]}
-          entities={this.entities}
-          onEvent={this.onEvent}
-          running={this.state.running}
+        <Animated.Image
+          source={require('../../assets/bird2.png')}
+          resizeMode="contain"
+          style={[
+            styles.birdImage,
+            {
+              transform: [
+                {translateY: this.translateBirdY},
+                {translateX: this.translateBirdX},
+                {scale: this.scaleBird},
+              ],
+            },
+          ]}
         />
-        <Text style={styles.score}>{this.state.score}</Text>
-        {!this.state.running && (
+        <Animated.View
+          style={[styles.buttonContainer, {opacity: this.buttonOpacity}]}>
           <TouchableOpacity
-            onPress={this.reset}
-            style={styles.fullScreenButton}>
-            <View style={styles.fullScreen}>
-              <Text style={styles.gameOverText}>Game Over</Text>
-              <Text style={styles.gameOverSubText}>Try Again</Text>
-            </View>
+            style={styles.button}
+            onPress={() => this.onPlayApp()}>
+            <Text style={styles.buttonText}>Play</Text>
           </TouchableOpacity>
-        )}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.onLeaderBoardPress()}>
+            <Text style={styles.buttonText}>Leaderboard</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.onExitApp()}>
+            <Text style={styles.buttonText}>Exit</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     );
-  };
-
-  render() {
-    return this.renderGame();
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  viewContainer: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backgroundImage: {
     position: 'absolute',
@@ -149,49 +169,31 @@ const styles = StyleSheet.create({
     width: Constants.MAX_WIDTH,
     height: Constants.MAX_HEIGHT,
   },
-  gameContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  score: {
-    position: 'absolute',
-    color: 'white',
-    fontSize: 72,
-    top: 30,
+  birdImage: {
+    width: 100,
     alignSelf: 'center',
-    textShadowColor: '#444444',
-    textShadowOffset: {width: 2, height: 2},
-    textShadowRadius: 2,
-    zIndex: 100,
   },
-  fullScreenButton: {
+  buttonContainer: {
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flex: 1,
-  },
-  fullScreen: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'black',
-    opacity: 0.8,
+    bottom: Constants.MAX_HEIGHT / 4,
+    width: Constants.MAX_WIDTH - 80,
+    paddingVertical: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 8,
+    borderWidth: 2,
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  gameOverText: {
-    color: 'white',
-    fontSize: 48,
+  button: {
+    marginVertical: 6,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
-  gameOverSubText: {
+  buttonText: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 18,
   },
 });

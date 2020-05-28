@@ -6,14 +6,39 @@ import {createStackNavigator} from '@react-navigation/stack';
 // importing screens
 import UserStarting from './src/screens/UserStarting.js';
 import GameHome from './src/screens/GameHome.js';
+import Play from './src/screens/Play.js';
 
 const Stack = createStackNavigator();
 
 function DefaultStack() {
   return (
-    <Stack.Navigator initialRouteName="Start" headerMode="none">
-      <Stack.Screen name="Start" component={UserStarting} />
-      <Stack.Screen name="Home" component={GameHome} />
+    <Stack.Navigator
+      options={{
+        animationEnabled: false,
+      }}
+      initialRouteName="Start"
+      headerMode="none">
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="Start"
+        component={UserStarting}
+      />
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="Home"
+        component={GameHome}
+      />
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="Play"
+        component={Play}
+      />
     </Stack.Navigator>
   );
 }
