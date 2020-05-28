@@ -38,7 +38,7 @@ export default class GameHome extends Component {
     });
     this.scaleBird = this.onPlay.interpolate({
       inputRange: [0, 1],
-      outputRange: [1, 0.44],
+      outputRange: [2, 1],
       extrapolate: 'clamp',
     });
   }
@@ -135,7 +135,7 @@ export default class GameHome extends Component {
           </TouchableOpacity>
         </Animated.View>
         <Animated.Image
-          source={require('../../assets/bird2.png')}
+          source={require('../../assets/bird.png')}
           resizeMode="contain"
           style={[
             styles.birdImage,
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
     right: 10,
   },
   birdImage: {
-    width: 100,
     alignSelf: 'center',
   },
   buttonContainer: {

@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, Animated} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
+import bg from '../../assets/background-day.png';
+import bird from '../../assets/bird.png';
+
 // importing constants
 import Constants from '../Constant.js';
 import {FlatList} from 'react-native-gesture-handler';
@@ -34,15 +37,11 @@ export default class LeaderBoard extends Component {
     return (
       <View style={styles.viewContainer}>
         <Image
-          source={require('../../assets/background-day.png')}
+          source={bg}
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
-        <Image
-          source={require('../../assets/bird2.png')}
-          resizeMode="contain"
-          style={[styles.birdImage]}
-        />
+        <Image source={bird} resizeMode="contain" style={[styles.birdImage]} />
         <Animated.View style={styles.innerContainer}>
           <FlatList
             style={styles.boardListContainer}
@@ -102,10 +101,9 @@ const styles = StyleSheet.create({
     height: Constants.MAX_HEIGHT,
   },
   birdImage: {
-    width: 100,
     alignSelf: 'center',
     position: 'absolute',
-    transform: [{translateY: -Constants.MAX_HEIGHT / 3}],
+    transform: [{translateY: -Constants.MAX_HEIGHT / 3}, {scale: 2}],
   },
   innerContainer: {
     alignSelf: 'center',

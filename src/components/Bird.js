@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {Image} from 'react-native';
-import birdImage from '../../assets/bird2.png';
+import birdImage from '../../assets/bird.png';
 
 export default class Bird extends Component {
   constructor(props) {

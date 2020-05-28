@@ -60,7 +60,7 @@ export default class UserStarting extends Component {
           resizeMode="stretch"
         />
         <Image
-          source={require('../../assets/bird2.png')}
+          source={require('../../assets/bird.png')}
           resizeMode="contain"
           style={styles.birdImage}
         />
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     height: Constants.MAX_HEIGHT,
-    width: 100,
+    transform: [{scale: 2}],
     zIndex: 2,
   },
   gameName: {

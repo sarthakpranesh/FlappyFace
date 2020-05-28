@@ -5,6 +5,6 @@ export default Constants = {
   MAX_HEIGHT: Dimensions.get('window').height,
   GAP_SIZE: 200,
   PIPE_WIDTH: 60,
-  BIRD_WIDTH: 44,
-  BIRD_HEIGHT: 38,
+  BIRD_WIDTH: 34,
+  BIRD_HEIGHT: 24,
 };
