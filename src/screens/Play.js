@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -115,7 +116,9 @@ export default class Play extends Component {
       this.setState({
         score: this.state.score + 1,
       });
+      SoundPlayer.playSoundFile('point', 'wav');
     } else if (e.type === 'game-over') {
+      SoundPlayer.playSoundFile('hit', 'wav');
       stopGame();
       this.setState({
         running: false, //on collision we stop the game

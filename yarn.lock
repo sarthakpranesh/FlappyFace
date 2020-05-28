@@ -5700,6 +5700,11 @@ react-native-screens@^2.8.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.8.0.tgz#9f989096fc5ccf248e0dfa93a74f1a64057e15f1"
   integrity sha512-fUCIQLZX+5XB0ypWX038P3zso54IFFjTsQUZJWEsjC3pp5rPItAt5SzqtJn+uVjcJaczZ+dpIuvj6IFLqkWLZQ==
 
+react-native-sound-player@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/react-native-sound-player/-/react-native-sound-player-0.10.4.tgz#982822b23de39c05debe9c8aa60b0f7a0048799f"
+  integrity sha512-SOKRryMnRKP0zii4oWkNhBTEyvZqaKF7bzDKpj4CqzBI78u92ivMjWXXIEw70v98RiWGJ2S4gB99iErPPo/5BQ==
+
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.6.0.tgz#66cf004918eb05d90778d64bd42077c1800d481b"

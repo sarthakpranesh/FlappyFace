@@ -10,6 +10,7 @@ import {
   BackHandler,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
@@ -49,6 +50,7 @@ export default class GameHome extends Component {
         this.props.navigation.navigate('Start');
       }
     });
+    SoundPlayer.playSoundFile('point', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: new Animated.Value(1),
@@ -75,6 +77,7 @@ export default class GameHome extends Component {
   }
 
   onPlayApp() {
+    SoundPlayer.playSoundFile('die', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 0,
@@ -91,6 +94,7 @@ export default class GameHome extends Component {
   }
 
   onLeaderBoardPress() {
+    SoundPlayer.playSoundFile('die', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 2,
@@ -101,6 +105,7 @@ export default class GameHome extends Component {
   }
 
   onExitApp() {
+    SoundPlayer.playSoundFile('die', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 0,
