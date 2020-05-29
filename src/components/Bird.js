@@ -3,24 +3,27 @@ import React, {Component} from 'react';
 import {Image} from 'react-native';
 import birdImage from '../../assets/bird.png';
 
+import Constants from '../Constant.js';
+
 export default class Bird extends Component {
   constructor(props) {
     super(props);
-  }
-  render() {
-    const width = this.props.body.bounds.max.x - this.props.body.bounds.min.x;
-    const height = this.props.body.bounds.max.y - this.props.body.bounds.min.y;
-    const x = this.props.body.position.x - width / 2;
-    const y = this.props.body.position.y - height / 2;
 
+    this.width = Constants.BIRD_WIDTH;
+    this.height = Constants.BIRD_HEIGHT;
+  }
+
+  render() {
+    const x = this.props.position[0] - this.width / 2;
+    const y = this.props.position[1] - this.height / 2;
     return (
       <Image
         style={{
           position: 'absolute',
           top: y,
           left: x,
-          width: width,
-          height: height,
+          width: this.width,
+          height: this.height,
         }}
         resizeMode="contain"
         source={birdImage}

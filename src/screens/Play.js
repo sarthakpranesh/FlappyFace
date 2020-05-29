@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
@@ -7,24 +7,25 @@ import firestore from '@react-native-firebase/firestore';
 //importing other files and libs
 import Constants from '../Constant.js'; //setup some fixed properties in the file
 import {GameEngine} from 'react-native-game-engine'; //game engine for our app
-import Matter from 'matter-js'; //physics library
 
 //importing actual objects, these components are used to display different spaces on the screen
 import Bird from '../components/Bird.js';
 import Floor from '../components/Floor.js';
+import Pipe from '../components/Pipe.js';
 
 //importing physics that are created to make the world interactive, has settings that make the world feel real
-import Physics, {
-  resetPipes,
+import {
   stopGame,
   startGame,
+  randomBetween,
+  GameControl,
 } from '../components/Physics.js';
 
-export default class Play extends Component {
+export default class Play extends PureComponent {
   constructor(props) {
-    super(props); //App is extending class Components hence super(props) passes the props to the Component class
+    super(props);
     this.gameEngine = null;
-    this.entities = this.setupWorld(); //used to set the Engine World up
+    this.entities = this.setupWorld();
 
     this.state = {
       running: true,
@@ -67,46 +68,32 @@ export default class Play extends Component {
   };
 
   setupWorld = () => {
-    let engine = Matter.Engine.create({enableSleeping: false}); //creates the world engine
-    let world = engine.world; //creates the world
-    world.gravity.y = 0;
+    let bird = [Constants.MAX_WIDTH / 4, Constants.MAX_HEIGHT / 2];
 
-    //different bodies in the world, inform of rectangles ( isStatic is set to true for making bodies on which physics don't apply )
-    let bird = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 4,
-      Constants.MAX_HEIGHT / 2,
-      Constants.BIRD_WIDTH,
-      Constants.BIRD_HEIGHT,
-    );
-    let floor1 = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 2,
-      Constants.MAX_HEIGHT - 25,
-      Constants.MAX_WIDTH + 4,
-      50,
-      {isStatic: true},
-    );
+    let floor1 = [0, Constants.MAX_HEIGHT - Constants.FLOOR_HEIGHT];
+    let floor2 = [
+      Constants.MAX_WIDTH,
+      Constants.MAX_HEIGHT - Constants.FLOOR_HEIGHT,
+    ];
 
-    let floor2 = Matter.Bodies.rectangle(
-      Constants.MAX_WIDTH / 2 + Constants.MAX_WIDTH,
-      Constants.MAX_HEIGHT - 25,
-      Constants.MAX_WIDTH + 4,
-      50,
-      {isStatic: true},
-    );
+    let pipe1 = [
+      Constants.MAX_WIDTH + Constants.PIPE_WIDTH / 2,
+      0,
+      randomBetween(),
+    ];
 
-    //adding all the bodies to our game world
-    Matter.World.add(world, [bird, floor1, floor2]);
-
-    Matter.Events.on(engine, 'collisionStart', event => {
-      //broadcast an event called "game-over"
-      this.gameEngine.dispatch({type: 'game-over'});
-    });
+    let pipe2 = [
+      Constants.MAX_WIDTH * 2 + Constants.PIPE_WIDTH / 2,
+      0,
+      randomBetween(),
+    ];
 
     return {
-      physics: {engine: engine, world: world},
-      bird: {body: bird, pose: 1, renderer: Bird},
-      floor1: {body: floor1, renderer: Floor},
-      floor2: {body: floor2, renderer: Floor},
+      1: {position: bird, renderer: <Bird />, name: 'bird'},
+      2: {position: floor1, renderer: <Floor />, name: 'floor'},
+      3: {position: floor2, renderer: <Floor />, name: 'floor'},
+      4: {position: pipe1, renderer: <Pipe />, name: 'pipe'},
+      5: {position: pipe2, renderer: <Pipe />, name: 'pipe'},
     };
   };
 
@@ -128,7 +115,6 @@ export default class Play extends Component {
 
   //reset the game to play again
   reset = () => {
-    resetPipes();
     startGame();
     this.gameEngine.swap(this.setupWorld());
     this.setState({
@@ -150,7 +136,7 @@ export default class Play extends Component {
             this.gameEngine = ref;
           }}
           style={StyleSheet.gameContainer}
-          systems={[Physics]}
+          systems={[GameControl]}
           entities={this.entities}
           onEvent={this.onEvent}
           running={this.state.running}
