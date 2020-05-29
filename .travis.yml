@@ -1,0 +1,24 @@
+branches:
+  only:
+  - master
+  - develop
+language: android
+before_install:
+  - openssl aes-256-cbc -K $encrypted_e3a6b5855819_key -iv $encrypted_e3a6b5855819_iv
+    -in google-services.json.enc -out ./android/app/google-services.json -d
+  - openssl aes-256-cbc -K $encrypted_52967910be36_key -iv $encrypted_52967910be36_iv
+    -in release.keystore.enc -out ./android/app/release.keystore -d
+  - nvm install 12
+  - node --version
+install:
+  - yarn
+android:
+  components:
+  - build-tools-28.0.3
+  - android-28
+script:
+  - yarn lint
+  - yarn build-android
+after_success:
+  - chmod +x ./upload-apk.sh
+  - "./upload-apk.sh"
