@@ -37,7 +37,7 @@ export const GameControl = (entities, {touches, dispatch}) => {
         if (bird.position[1] + Constants.BIRD_HEIGHT / 2 >= body.position[1]) {
           dispatch({type: 'game-over'});
         }
-        body.position[0] -= 2;
+        body.position[0] -= 1;
         if (body.position[0] <= -Constants.MAX_WIDTH) {
           body.position[0] = Constants.MAX_WIDTH;
         }
@@ -74,7 +74,7 @@ export const GameControl = (entities, {touches, dispatch}) => {
           body.position[2] = randomBetween();
           body.position[0] = Constants.MAX_WIDTH * 2 + Constants.PIPE_WIDTH / 2;
         }
-        body.position[0] -= 2;
+        body.position[0] -= 1;
         return;
       } else {
         // if bird, apply gravity
@@ -88,10 +88,10 @@ export const GameControl = (entities, {touches, dispatch}) => {
 
   touches.forEach(t => {
     if (gravity === 0) {
-      gravity = 9.8;
+      gravity = 4;
     }
 
-    if (!(entities['1'].position[1] < 50)) {
+    if (!(entities['1'].position[1] < 40)) {
       birdJump = gravity * 2;
     }
   });
