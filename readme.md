@@ -1,8 +1,8 @@
 <div align='center'>
 
-<img src="./assets/bird.png" title="Flappy Bird" width="100" />
+<img src="./assets/bird.png" title="Flappy RNB" width="100" />
 
-# Flappy Bird
+# Flappy RNB
 
 [![Build Status](https://travis-ci.com/sarthakpranesh/flappyBird.svg?branch=master)](https://travis-ci.com/sarthakpranesh/flappyBird)
 [![GitHub top language](https://img.shields.io/github/languages/top/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/search?l=javascript&type=Code)
@@ -10,7 +10,7 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/pulls)
 [![GitHub](https://img.shields.io/github/license/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/blob/master/LICENSE)
 
-## The popular classic Flappy Bird game build in React Native
+## The popular classic Flappy Bird game clone called Flappy RNB build in React Native
 
 </div>
 

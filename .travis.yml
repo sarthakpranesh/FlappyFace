@@ -22,3 +22,17 @@ script:
 after_success:
   - chmod +x ./upload-apk.sh
   - "./upload-apk.sh"
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key: $GITHUB_API_KEY
+  file:
+    - $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-arm64-v8a-release.apk
+    - $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-armeabi-v7a-release.apk
+    - $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-x86_64-release.apk
+    - $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-x86-release.apk
+    - $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-universal-release.apk
+  on:
+    repo: sarthakpranesh/flappyBird
+    branch: master
+    tags: true

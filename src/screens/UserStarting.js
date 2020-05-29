@@ -66,7 +66,7 @@ export default class UserStarting extends Component {
           resizeMode="contain"
           style={styles.birdImage}
         />
-        <Text style={styles.gameName}>Flappy Bird</Text>
+        <Text style={styles.gameName}>Flappy RNB</Text>
         <GoogleSigninButton
           style={styles.googleButton}
           size={GoogleSigninButton.Size.Wide}
@@ -106,9 +106,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     marginTop: Constants.MAX_HEIGHT / 2 + 50,
-    color: 'black',
+    color: 'white',
     fontSize: Constants.MAX_WIDTH / 14,
     fontFamily: 'cusFont',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 8, height: 8},
+    elevation: 4,
     zIndex: 2,
   },
   googleButton: {
