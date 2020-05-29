@@ -88,11 +88,11 @@ export const GameControl = (entities, {touches, dispatch}) => {
 
   touches.forEach(t => {
     if (gravity === 0) {
-      gravity = 4;
+      gravity = 6;
     }
 
     if (!(entities['1'].position[1] < 40)) {
-      birdJump = gravity * 2;
+      birdJump = 16;
     }
   });
 

@@ -68,6 +68,8 @@ export default class Play extends PureComponent {
   };
 
   setupWorld = () => {
+    startGame();
+
     let bird = [Constants.MAX_WIDTH / 4, Constants.MAX_HEIGHT / 2];
 
     let floor1 = [0, Constants.MAX_HEIGHT - Constants.FLOOR_HEIGHT];
