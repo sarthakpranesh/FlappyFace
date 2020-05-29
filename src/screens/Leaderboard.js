@@ -24,7 +24,8 @@ export default class LeaderBoard extends Component {
       .collection('leaderboard')
       .orderBy('score')
       .limit(25)
-      .onSnapshot(snap => {
+      .get()
+      .then(snap => {
         let tmp = [];
         snap.forEach(snap => {
           tmp.push(snap.data());

@@ -42,13 +42,13 @@ export const generatePipes = () => {
 };
 
 export const addPipesAtLocation = (x, world, entities) => {
-  let [pipe1Height, pipe2Height] = generatePipes();
+  let [pipe1TopHeight, pipe1BottomHeight] = generatePipes();
 
   let pipe1Top = Matter.Bodies.rectangle(
     x,
-    pipe1Height / 2,
+    pipe1TopHeight / 2,
     Constants.PIPE_WIDTH,
-    pipe1Height,
+    pipe1TopHeight,
     {
       isStatic: true,
     },
@@ -56,9 +56,9 @@ export const addPipesAtLocation = (x, world, entities) => {
 
   let pipe1 = Matter.Bodies.rectangle(
     x,
-    pipe1Height + Constants.GAP_SIZE + pipe2Height / 2 - 50,
+    pipe1TopHeight + Constants.GAP_SIZE + pipe1BottomHeight / 2 - 50,
     Constants.PIPE_WIDTH,
-    pipe2Height,
+    pipe1BottomHeight,
     {
       isStatic: true,
     },
@@ -91,12 +91,12 @@ const Physics = (entities, {touches, time, dispatch}) => {
         if (world.gravity.y === 0.0) {
           world.gravity.y = 1.2;
           addPipesAtLocation(
-            Constants.MAX_WIDTH * 2 - Constants.PIPE_WIDTH,
+            Constants.MAX_WIDTH + Constants.PIPE_WIDTH,
             world,
             entities,
           );
           addPipesAtLocation(
-            Constants.MAX_WIDTH * 3 - Constants.PIPE_WIDTH,
+            Constants.MAX_WIDTH * 2 + Constants.PIPE_WIDTH,
             world,
             entities,
           );

@@ -44,11 +44,6 @@ export default class GameHome extends Component {
   }
 
   componentDidMount() {
-    auth().onAuthStateChanged(user => {
-      if (!user) {
-        this.props.navigation.navigate('Start');
-      }
-    });
     SoundPlayer.playSoundFile('point', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
@@ -165,6 +160,7 @@ export default class GameHome extends Component {
               await GoogleSignin.revokeAccess();
               await GoogleSignin.signOut();
               auth().signOut();
+              this.props.navigation.navigate('Start');
             }}>
             <Text style={styles.buttonText}>LogOut</Text>
           </TouchableOpacity>

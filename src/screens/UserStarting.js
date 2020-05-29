@@ -24,8 +24,9 @@ export default class UserStarting extends Component {
   componentDidMount() {
     auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('DefaultStack');
       }
+      console.log('Start Screen');
       SplashScreen.hide();
     });
   }

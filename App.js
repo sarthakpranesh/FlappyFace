@@ -17,15 +17,8 @@ function DefaultStack() {
       options={{
         animationEnabled: false,
       }}
-      initialRouteName="Start"
+      initialRouteName="Home"
       headerMode="none">
-      <Stack.Screen
-        options={{
-          animationEnabled: false,
-        }}
-        name="Start"
-        component={UserStarting}
-      />
       <Stack.Screen
         options={{
           animationEnabled: false,
@@ -51,11 +44,37 @@ function DefaultStack() {
   );
 }
 
+function UserStartingStack() {
+  return (
+    <Stack.Navigator
+      options={{
+        animationEnabled: false,
+      }}
+      initialRouteName="Start"
+      headerMode="none">
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="Start"
+        component={UserStarting}
+      />
+      <Stack.Screen
+        options={{
+          animationEnabled: false,
+        }}
+        name="DefaultStack"
+        component={DefaultStack}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
       <StatusBar hidden={true} />
-      <DefaultStack />
+      <UserStartingStack />
     </NavigationContainer>
   );
 }
