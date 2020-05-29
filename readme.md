@@ -26,5 +26,20 @@ The project uses firebase for providing many functionalities. Hence you'll need 
 5. yarn android
 (Make sure you run `yarn start` and leave the bundler running and then run `yarn android` on another terminal window)
 
+## Looking To Contribute
+All contributions are welcomed. Please follow the below key points!
+
+Before you start your awesome work make sure you follow the below steps
+1. Create your own Fork of the flappyBird repo
+2. Create a new branch with a branch-name that starts with your name followed by what feature/issue you are going to add/resolve.
+3. Now let your work begin in this new branch and make sure you follow the code style of the project.
+4. Once you are done, Send us a pull request on the develop branch on the main flappyBird repo.
+
+Some key points
+- Each feature/issue you work with should have a different branch which should follow the stated naming convention
+- Make sure you regularly pull changes from the develop branch, as it will be kept up to date with latest changes.
+
+
+
 ## Having Issues
-This project uses [GitHub Issues]() for tracking bugs and feature requests, so feel free to open one if you find any :)
+This project uses [GitHub Issues](https://github.com/sarthakpranesh/flappyBird/issues) for tracking bugs and feature requests, so feel free to open one if you find any :)
