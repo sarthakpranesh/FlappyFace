@@ -44,7 +44,6 @@ export default class GameHome extends Component {
   }
 
   componentDidMount() {
-    SoundPlayer.playSoundFile('point', 'wav');
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: new Animated.Value(1),
@@ -53,20 +52,19 @@ export default class GameHome extends Component {
     }).start();
 
     this.props.navigation.addListener('focus', () => {
-      if (this.translateBirdX !== 0) {
-        Animated.timing(this.onPlay, {
-          duration: 500,
-          toValue: 0,
+      SoundPlayer.playSoundFile('point', 'wav');
+      Animated.timing(this.onPlay, {
+        duration: 500,
+        toValue: 0,
+        useNativeDriver: true,
+      }).start(() => {
+        Animated.timing(this.onLoad, {
+          duration: 1000,
+          toValue: new Animated.Value(1),
           useNativeDriver: true,
-        }).start(() => {
-          Animated.timing(this.onLoad, {
-            duration: 1000,
-            toValue: new Animated.Value(1),
-            useNativeDriver: true,
-            easing: Easing.bounce,
-          }).start();
-        });
-      }
+          easing: Easing.bounce,
+        }).start();
+      });
     });
   }
 

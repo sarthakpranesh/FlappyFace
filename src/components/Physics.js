@@ -72,7 +72,7 @@ export const GameControl = (entities, {touches, dispatch}) => {
         if (body.position[0] <= -Constants.PIPE_WIDTH) {
           scored = false;
           body.position[2] = randomBetween();
-          body.position[0] = Constants.MAX_WIDTH * 2 + Constants.PIPE_WIDTH / 2;
+          body.position[0] = Constants.MAX_WIDTH * 2 - Constants.PIPE_WIDTH;
         }
         body.position[0] -= 1;
         return;
@@ -88,11 +88,11 @@ export const GameControl = (entities, {touches, dispatch}) => {
 
   touches.forEach(t => {
     if (gravity === 0) {
-      gravity = 6;
+      gravity = 5.4;
     }
 
     if (!(entities['1'].position[1] < 40)) {
-      birdJump = 16;
+      birdJump = gravity * 2;
     }
   });
 

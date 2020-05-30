@@ -34,6 +34,11 @@ export default class Play extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    SoundPlayer.loadSoundFile('point', 'wav');
+    SoundPlayer.loadSoundFile('hit', 'wav');
+  }
+
   updateUserScore = score => {
     const {uid} = this.state;
     firestore()
