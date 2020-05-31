@@ -96,7 +96,7 @@ export default class Play extends PureComponent {
     ];
 
     return {
-      1: {position: bird, renderer: <Bird />, name: 'bird'},
+      1: {position: bird, renderer: <Bird />, name: 'bird', pose: 0},
       2: {position: floor1, renderer: <Floor />, name: 'floor'},
       3: {position: floor2, renderer: <Floor />, name: 'floor'},
       4: {position: pipe1, renderer: <Pipe />, name: 'pipe'},

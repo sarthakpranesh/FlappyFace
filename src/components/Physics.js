@@ -3,6 +3,7 @@ import Constants from '../Constant';
 let pause = false;
 let birdJump = 0;
 let gravity = 0;
+let prevTime = 0;
 let scored = false;
 
 export const stopGame = () => {
@@ -26,7 +27,7 @@ export const randomBetween = () => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const GameControl = (entities, {touches, dispatch}) => {
+export const GameControl = (entities, {time, touches, dispatch}) => {
   if (!pause) {
     Object.keys(entities).forEach(key => {
       const bird = entities['1'];
@@ -77,8 +78,12 @@ export const GameControl = (entities, {touches, dispatch}) => {
         body.position[0] -= 1;
         return;
       } else {
-        // if bird, apply gravity
+        // if bird, apply gravity and change pose
         body.position[1] += gravity - birdJump;
+        if (time.current - prevTime >= 500) {
+          prevTime = time.current;
+          body.pose = (body.pose + 1) % 3;
+        }
         if (birdJump > 0) {
           birdJump--;
         }

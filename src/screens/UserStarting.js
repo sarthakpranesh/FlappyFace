@@ -47,6 +47,11 @@ export default class UserStarting extends Component {
           'Please install Google Play Services!',
           ToastAndroid.SHORT,
         );
+      } else if (error.message === 'NETWORK_ERROR') {
+        ToastAndroid.show(
+          'We are having Network issues :<',
+          ToastAndroid.SHORT,
+        );
       } else {
         console.log(error.message);
       }
