@@ -8,6 +8,7 @@
 [![GitHub top language](https://img.shields.io/github/languages/top/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/search?l=javascript&type=Code)
 [![GitHub issues](https://img.shields.io/github/issues/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/pulls)
+[![GitHub All Releases](https://img.shields.io/github/downloads/sarthakpranesh/flappyBird/total)](https://github.com/sarthakpranesh/flappyBird/releases)
 [![GitHub](https://img.shields.io/github/license/sarthakpranesh/flappyBird)](https://github.com/sarthakpranesh/flappyBird/blob/master/LICENSE)
 
 ## The popular classic Flappy Bird game clone called Flappy RNB build in React Native
