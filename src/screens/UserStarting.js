@@ -6,8 +6,6 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
-import SplashScreen from 'react-native-splash-screen';
-
 GoogleSignin.configure({
   webClientId:
     '831535281165-raapdh2a3l20d64qvrfkdi3co1s96utr.apps.googleusercontent.com',
@@ -19,16 +17,6 @@ import Constants from '../Constant.js';
 export default class UserStarting extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.navigation.navigate('DefaultStack');
-      }
-      console.log('Start Screen');
-      SplashScreen.hide();
-    });
   }
 
   async onContinueWithGoogle() {

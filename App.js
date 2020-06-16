@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import SplashScreen from 'react-native-splash-screen';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -11,70 +14,78 @@ import LeaderBoard from './src/screens/Leaderboard.js';
 
 const Stack = createStackNavigator();
 
-function DefaultStack() {
-  return (
-    <Stack.Navigator
-      options={{
-        animationEnabled: false,
-      }}
-      initialRouteName="Home"
-      headerMode="none">
-      <Stack.Screen
-        options={{
-          animationEnabled: false,
-        }}
-        name="Home"
-        component={GameHome}
-      />
-      <Stack.Screen
-        options={{
-          animationEnabled: false,
-        }}
-        name="Play"
-        component={Play}
-      />
-      <Stack.Screen
-        options={{
-          animationEnabled: false,
-        }}
-        name="LeaderBoard"
-        component={LeaderBoard}
-      />
-    </Stack.Navigator>
-  );
-}
+class DefaultStack extends Component {
+  constructor(props) {
+    super(props);
 
-function UserStartingStack() {
-  return (
-    <Stack.Navigator
-      options={{
-        animationEnabled: false,
-      }}
-      initialRouteName="Start"
-      headerMode="none">
-      <Stack.Screen
+    this.state = {
+      isSigned: false,
+    };
+  }
+
+  componentDidMount() {
+    auth().onAuthStateChanged(user => {
+      this.setState({isSigned: user ? true : false});
+      SplashScreen.hide();
+    });
+  }
+
+  render() {
+    const {isSigned} = this.state;
+
+    return isSigned ? (
+      <Stack.Navigator
         options={{
           animationEnabled: false,
         }}
-        name="Start"
-        component={UserStarting}
-      />
-      <Stack.Screen
+        initialRouteName="Home"
+        headerMode="none">
+        <Stack.Screen
+          options={{
+            animationEnabled: false,
+          }}
+          name="Home"
+          component={GameHome}
+        />
+        <Stack.Screen
+          options={{
+            animationEnabled: false,
+          }}
+          name="Play"
+          component={Play}
+        />
+        <Stack.Screen
+          options={{
+            animationEnabled: false,
+          }}
+          name="LeaderBoard"
+          component={LeaderBoard}
+        />
+      </Stack.Navigator>
+    ) : (
+      <Stack.Navigator
         options={{
           animationEnabled: false,
         }}
-        name="DefaultStack"
-        component={DefaultStack}
-      />
-    </Stack.Navigator>
-  );
+        initialRouteName="Home"
+        headerMode="none">
+        <Stack.Screen
+          options={{
+            animationEnabled: false,
+          }}
+          name="Start"
+          component={UserStarting}
+        />
+      </Stack.Navigator>
+    );
+  }
 }
 
 export default function App() {
   return (
     <NavigationContainer>
       <StatusBar hidden={true} />
-      <UserStartingStack />
+      <DefaultStack />
     </NavigationContainer>
   );
 }
