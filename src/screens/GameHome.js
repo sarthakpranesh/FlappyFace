@@ -8,6 +8,7 @@ import {
   Animated,
   TouchableOpacity,
   BackHandler,
+  Alert,
 } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
@@ -113,6 +114,25 @@ export default class GameHome extends Component {
     });
   }
 
+  onLogout() {
+    Alert.alert(
+      'Logout',
+      'Are you sure, you want to logout of the app?',
+      [
+        {
+          text: 'Yes',
+          onPress: async () => {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            auth().signOut();
+          },
+        },
+        {text: 'No'},
+      ],
+      {cancelable: true},
+    );
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -154,11 +174,7 @@ export default class GameHome extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={async () => {
-              await GoogleSignin.revokeAccess();
-              await GoogleSignin.signOut();
-              auth().signOut();
-            }}>
+            onPress={() => this.onLogout()}>
             <Text style={styles.buttonText}>LogOut</Text>
           </TouchableOpacity>
         </Animated.View>
