@@ -8,7 +8,9 @@ import bird from '../../assets/bird.png';
 
 // importing constants
 import Constants from '../Constant.js';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+
+import Styles from '../Styles.js';
 
 export default class LeaderBoard extends Component {
   constructor(props) {
@@ -42,6 +44,11 @@ export default class LeaderBoard extends Component {
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
+        <View style={styles.backBtn}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <Text style={[styles.backBtnText, Styles.fontLarge]}>x</Text>
+          </TouchableOpacity>
+        </View>
         <Image source={bird} resizeMode="contain" style={[styles.birdImage]} />
         <Animated.View style={styles.innerContainer}>
           <FlatList
@@ -51,8 +58,12 @@ export default class LeaderBoard extends Component {
             renderItem={({item}) => {
               return (
                 <View style={styles.flatListRow}>
-                  <Text style={styles.flatListText}>{item.name}</Text>
-                  <Text style={styles.flatListText}>{item.score}</Text>
+                  <Text style={[styles.flatListText, Styles.fontSmall]}>
+                    {item.name}
+                  </Text>
+                  <Text style={[styles.flatListText, Styles.fontSmall]}>
+                    {item.score}
+                  </Text>
                 </View>
               );
             }}
@@ -60,7 +71,11 @@ export default class LeaderBoard extends Component {
               return <View style={styles.flatListSeparator} />;
             }}
             ListEmptyComponent={() => {
-              return <Text style={styles.flatListText}>Loading...</Text>;
+              return (
+                <Text style={[styles.flatListText, Styles.fontSmall]}>
+                  Loading...
+                </Text>
+              );
             }}
             ListHeaderComponent={() => {
               return (
@@ -72,8 +87,12 @@ export default class LeaderBoard extends Component {
                       borderBottomWidth: 1,
                     },
                   ]}>
-                  <Text style={styles.flatListText}>Name</Text>
-                  <Text style={styles.flatListText}>Score</Text>
+                  <Text style={[styles.flatListText, Styles.fontSmall]}>
+                    Name
+                  </Text>
+                  <Text style={[styles.flatListText, Styles.fontSmall]}>
+                    Score
+                  </Text>
                 </View>
               );
             }}
@@ -99,6 +118,14 @@ const styles = StyleSheet.create({
     right: 0,
     width: Constants.MAX_WIDTH,
     height: Constants.MAX_HEIGHT,
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 20,
+  },
+  backBtnText: {
+    fontFamily: 'cusFont',
+    color: 'white',
   },
   birdImage: {
     alignSelf: 'center',
@@ -133,9 +160,7 @@ const styles = StyleSheet.create({
   },
   flatListText: {
     color: 'white',
-    fontSize: 10,
     fontFamily: 'cusFont',
-    overflow: 'hidden',
   },
   flatListSeparator: {
     borderBottomColor: 'rgba(255,255,255, 0.2)',

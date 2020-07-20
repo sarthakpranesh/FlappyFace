@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {PureComponent} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
@@ -20,6 +21,8 @@ import {
   randomBetween,
   GameControl,
 } from '../components/Physics.js';
+
+import Styles from '../Styles.js';
 
 export default class Play extends PureComponent {
   constructor(props) {
@@ -148,12 +151,18 @@ export default class Play extends PureComponent {
           onEvent={this.onEvent}
           running={this.state.running}
         />
-        <Text style={styles.score}>{this.state.score}</Text>
+        <Text style={[styles.score, Styles.fontExtraLarge]}>
+          {this.state.score}
+        </Text>
         {!this.state.running && (
           <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>Game Over</Text>
+            <Text style={[styles.gameOverText, Styles.fontExtraLarge]}>
+              Game Over
+            </Text>
             <TouchableOpacity onPress={this.reset}>
-              <Text style={styles.gameOverSubText}>Try Again</Text>
+              <Text style={[styles.gameOverSubText, Styles.fontMedium]}>
+                Try Again
+              </Text>
             </TouchableOpacity>
             <View style={{position: 'absolute', bottom: 10}}>
               <TouchableOpacity
@@ -161,7 +170,7 @@ export default class Play extends PureComponent {
                   this.reset();
                   this.props.navigation.goBack();
                 }}>
-                <Text style={styles.closeBtn}>x</Text>
+                <Text style={[styles.closeBtn, Styles.fontLarge]}>x</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -199,7 +208,6 @@ const styles = StyleSheet.create({
   score: {
     position: 'absolute',
     color: 'white',
-    fontSize: 72,
     fontFamily: 'cusFont',
     top: 30,
     alignSelf: 'center',
@@ -222,17 +230,14 @@ const styles = StyleSheet.create({
   },
   gameOverText: {
     color: 'white',
-    fontSize: Constants.MAX_WIDTH / 10,
     fontFamily: 'cusFont',
   },
   gameOverSubText: {
     color: 'white',
-    fontSize: Constants.MAX_WIDTH / 16,
     fontFamily: 'cusFont',
   },
   closeBtn: {
     color: 'white',
-    fontSize: Constants.MAX_HEIGHT / 16,
     fontFamily: 'cusFont',
   },
 });

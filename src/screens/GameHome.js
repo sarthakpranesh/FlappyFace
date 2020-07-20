@@ -9,12 +9,17 @@ import {
   TouchableOpacity,
   BackHandler,
   Alert,
+  Dimensions,
 } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
 import Constants from '../Constant.js';
+
+import Styles from '../Styles.js';
+
+const {height} = Dimensions.get('window');
 
 export default class GameHome extends Component {
   constructor(props) {
@@ -160,22 +165,24 @@ export default class GameHome extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.onPlayApp()}>
-            <Text style={styles.buttonText}>Play</Text>
+            <Text style={[styles.buttonText, Styles.fontSmall]}>Play</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.onLeaderBoardPress()}>
-            <Text style={styles.buttonText}>Leaderboard</Text>
+            <Text style={[styles.buttonText, Styles.fontSmall]}>
+              Leaderboard
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.onExitApp()}>
-            <Text style={styles.buttonText}>Exit</Text>
+            <Text style={[styles.buttonText, Styles.fontSmall]}>Exit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.onLogout()}>
-            <Text style={styles.buttonText}>LogOut</Text>
+            <Text style={[styles.buttonText, Styles.fontSmall]}>LogOut</Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -227,13 +234,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    marginVertical: 6,
+    marginVertical: height * 0.01,
     paddingHorizontal: 30,
-    paddingVertical: 10,
+    paddingVertical: height * 0.01,
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
     fontFamily: 'cusFont',
   },
 });
