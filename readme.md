@@ -1,6 +1,6 @@
 <div align='center'>
 
-<img src="./assets/bird.png" title="Flappy RNB" width="100" />
+<img src="./readmeHeader.png" title="Flappy RNB" />
 
 # Flappy RNB
 
