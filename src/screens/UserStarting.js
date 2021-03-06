@@ -6,6 +6,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+
 GoogleSignin.configure({
   webClientId:
     '831535281165-raapdh2a3l20d64qvrfkdi3co1s96utr.apps.googleusercontent.com',
