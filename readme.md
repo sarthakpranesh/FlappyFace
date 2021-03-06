@@ -1,3 +1,5 @@
+### Major Rewrite Under Progress, check developer branch
+
 <div align='center'>
 
 <img src="./readmeHeader.png" title="Flappy RNB" />
