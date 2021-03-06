@@ -1,5 +1,3 @@
-### Major Rewrite Under Progress, check developer branch
-
 <div align='center'>
 
 <img src="./readmeHeader.png" title="Flappy RNB" />
@@ -16,6 +14,15 @@
 ## The popular classic Flappy Bird game clone called Flappy RNB build in React Native
 
 </div>
+
+## Major Changes Underway
+Why? Well `React Native` and it's community has come a long way from when this project was build and I wish to use all the new goodies available in this app. Also this project is kinda a clone of the classic Flappy Bird game, I wish to introduce something unique in the app that will make the old classic game concept of flappy bird even better. Following is the list of changes I am going to make (but not limited to):
+
+- Update all libraries being used in the app, (including React Native)
+- Implement new concept of Flappy Face: ask for users image and use a cached lighter version of their image instead of the bird
+- Improve the animations: Possibly refactor the game engine implementation or look for more efficient light weight game engines
+- Refactor some other outdated code
+
 
 ## For Developers
 Make sure you have your React Native environment setup, if not please setup your environment from [here](https://reactnative.dev/docs/environment-setup).
