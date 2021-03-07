@@ -13,7 +13,7 @@ GoogleSignin.configure({
 });
 
 // import Constants
-import Constants from '../Constant.js';
+import Constants from '../Constant';
 
 export default class UserStarting extends Component {
   constructor(props) {

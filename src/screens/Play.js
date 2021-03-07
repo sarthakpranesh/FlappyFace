@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 //importing other files and libs
-import Constants from '../Constant.js'; //setup some fixed properties in the file
+import Constants from '../Constant'; //setup some fixed properties in the file
 import {GameEngine} from 'react-native-game-engine'; //game engine for our app
 
 //importing actual objects, these components are used to display different spaces on the screen
@@ -22,7 +22,7 @@ import {
   GameControl,
 } from '../components/Physics.js';
 
-import Styles from '../Styles.js';
+import Styles from '../Styles';
 
 export default class Play extends PureComponent {
   constructor(props) {

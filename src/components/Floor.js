@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Image} from 'react-native';
 
-import Constants from '../Constant.js';
+import Constants from '../Constant';
 
 export default class Floor extends Component {
   constructor(props) {

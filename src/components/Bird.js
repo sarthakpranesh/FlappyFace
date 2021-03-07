@@ -5,7 +5,7 @@ import birdImage1 from '../../assets/bird.png';
 import birdImage2 from '../../assets/bird2.png';
 import birdImage3 from '../../assets/bird3.png';
 
-import Constants from '../Constant.js';
+import Constants from '../Constant';
 
 export default class Bird extends Component {
   constructor(props) {

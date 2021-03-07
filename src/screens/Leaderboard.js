@@ -7,10 +7,10 @@ import bg from '../../assets/background-day.png';
 import bird from '../../assets/bird.png';
 
 // importing constants
-import Constants from '../Constant.js';
+import Constants from '../Constant';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 
-import Styles from '../Styles.js';
+import Styles from '../Styles';
 
 export default class LeaderBoard extends Component {
   constructor(props) {
