@@ -97,7 +97,7 @@ const GameHome = (props: GameHomeParams) => {
             },
             (d2) => {
               if (d2) {
-                runOnJS(BackHandler.exitApp);
+                runOnJS(BackHandler.exitApp)();
               }
             },
           );

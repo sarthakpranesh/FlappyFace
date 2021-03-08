@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {StatusBar} from 'react-native';
+import {preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
 import auth from '@react-native-firebase/auth';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // importing screens
-import SplashScreen from './src/screens/SplashScreen/SplashScreen';
 import UserStarting from './src/screens/UserStarting/UserStarting';
 import GameHome from './src/screens/GameHome/GameHome';
 import Play from './src/screens/Play/Play';
@@ -20,16 +20,13 @@ const DefaultStack = () => {
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      if (loaded === false) {
-        setLoaded(true);
-      }
       setIsSigned(user !== null ? true : false);
+      if (loaded === false) {
+        hideAsync();
+        setLoaded(false);
+      }
     });
   }, [loaded]);
-
-  if (loaded === false) {
-    return <SplashScreen />;
-  }
 
   return isSigned ? (
     <Stack.Navigator initialRouteName="Home" headerMode="none">
@@ -69,6 +66,9 @@ const DefaultStack = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    preventAutoHideAsync();
+  }, []);
   return (
     <NavigationContainer>
       <StatusBar hidden={true} />
