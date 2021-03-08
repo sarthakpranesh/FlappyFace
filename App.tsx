@@ -1,28 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import {StatusBar} from 'react-native';
 import auth from '@react-native-firebase/auth';
-import SplashScreen from 'react-native-splash-screen';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // importing screens
-import UserStarting from './src/screens/UserStarting';
+import SplashScreen from './src/screens/SplashScreen/SplashScreen';
+import UserStarting from './src/screens/UserStarting/UserStarting';
 import GameHome from './src/screens/GameHome/GameHome';
-import Play from './src/screens/Play';
-import LeaderBoard from './src/screens/Leaderboard';
+import Play from './src/screens/Play/Play';
+import LeaderBoard from './src/screens/LeaderBoard/LeaderBoard';
 
 const Stack = createStackNavigator();
 
 const DefaultStack = () => {
+  const [loaded, setLoaded] = useState<boolean>(false);
   const [isSigned, setIsSigned] = useState<boolean>(false);
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
+      if (loaded === false) {
+        setLoaded(true);
+      }
       setIsSigned(user !== null ? true : false);
-      SplashScreen.hide();
     });
-  }, []);
+  }, [loaded]);
+
+  if (loaded === false) {
+    return <SplashScreen />;
+  }
 
   return isSigned ? (
     <Stack.Navigator initialRouteName="Home" headerMode="none">

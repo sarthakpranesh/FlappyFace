@@ -125,6 +125,34 @@ const GameHome = (props: GameHomeParams) => {
     );
   };
 
+  useEffect(() => {
+    onLoad.value = withTiming(1, {
+      duration: 1000,
+      easing: Easing.bounce,
+    });
+
+    props.navigation.addListener('focus', () => {
+      console.log('Focused');
+      SoundPlayer.playSoundFile('point', 'wav');
+      onPlay.value = withTiming(
+        0,
+        {
+          duration: 500,
+          easing: Easing.ease,
+        },
+        (done) => {
+          if (done) {
+            onLoad.value = withTiming(1, {
+              duration: 1000,
+              easing: Easing.bounce,
+            });
+          }
+        },
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const animatedBirdStyles = useAnimatedStyle(() => {
     const translateBirdY = interpolate(
       onLoad.value,
@@ -165,33 +193,6 @@ const GameHome = (props: GameHomeParams) => {
       opacity: buttonOpacity,
     };
   });
-
-  useEffect(() => {
-    onLoad.value = withTiming(1, {
-      duration: 1000,
-      easing: Easing.bounce,
-    });
-
-    props.navigation.addListener('focus', () => {
-      SoundPlayer.playSoundFile('point', 'wav');
-      onPlay.value = withTiming(
-        0,
-        {
-          duration: 500,
-          easing: Easing.ease,
-        },
-        (done) => {
-          if (done) {
-            onLoad.value = withTiming(1, {
-              duration: 1000,
-              easing: Easing.bounce,
-            });
-          }
-        },
-      );
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <View style={styles.viewContainer}>
