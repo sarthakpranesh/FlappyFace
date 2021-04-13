@@ -1,3 +1,6 @@
+# Go to ROOT of project
+cd ../
+
 # Build the Android .apk files
 cd ./android 
 ./gradlew clean
