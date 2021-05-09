@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import {SharedElement} from 'react-navigation-shared-element';
 
 // importing constants
 import Constants from '../../Constant';
@@ -33,7 +34,7 @@ const LeaderBoard = (props: LeaderBoardParams) => {
       .orderBy('score')
       .limit(25)
       .get()
-      .then((snap) => {
+      .then(snap => {
         let tmp: any[] = [];
         snap.forEach((snap: any) => {
           tmp.push(snap.data());
@@ -50,7 +51,9 @@ const LeaderBoard = (props: LeaderBoardParams) => {
           <Text style={[styles.backBtnText, Styles.fontLarge]}>x</Text>
         </TouchableOpacity>
       </View>
-      <Image source={bird} resizeMode="contain" style={[styles.birdImage]} />
+      <SharedElement id="flappyBirdImage">
+        <Image source={bird} resizeMode="contain" style={[styles.birdImage]} />
+      </SharedElement>
       <Animated.View style={styles.innerContainer}>
         <FlatList
           style={styles.boardListContainer}
@@ -128,9 +131,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   birdImage: {
-    alignSelf: 'center',
     position: 'absolute',
-    transform: [{translateY: -Constants.MAX_HEIGHT / 3}, {scale: 2}],
+    alignSelf: 'center',
+    width: Constants.BIRD_IMAGE_WIDTH,
+    height: Constants.BIRD_IMAGE_HEIGHT,
+    transform: [{translateY: -Constants.MAX_HEIGHT / 2.6}],
   },
   innerContainer: {
     alignSelf: 'center',
@@ -167,5 +172,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
 });
+
+LeaderBoard.sharedElements = () => {
+  return [
+    {
+      id: 'flappyBirdImage',
+      animation: 'fade',
+      resize: 'none',
+      align: 'center',
+    },
+  ];
+};
 
 export default LeaderBoard;

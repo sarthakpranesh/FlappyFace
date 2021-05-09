@@ -4467,7 +4467,7 @@ hermes-profile-transformer@^0.0.6:
   dependencies:
     source-map "^0.7.3"
 
-hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -7075,6 +7075,11 @@ react-native-screens@^2.18.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.18.1.tgz#47b9991c6f762d00d0ed3233e5283d523e859885"
   integrity sha512-r5WZLpmx2hHjC1RgMdPq5YpSU9tEhBpUaZ5M1SUtNIONyiLqQVxabhRCINdebIk4depJiIl7yw2Q85zJyeX6fw==
 
+react-native-shared-element@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-shared-element/-/react-native-shared-element-0.7.0.tgz#c5e02eb372f6e38e48eb1030fd59be8f3d8c7a1f"
+  integrity sha512-TJTGwQceABYete+vH3ahNSgzVzXz7X2SPv3thT91gdcFCrm7ht7IKXBXJiYjOA+4TfdqnGEAWkspCy80oEnOgw==
+
 react-native-sound-player@^0.10.7:
   version "0.10.7"
   resolved "https://registry.yarnpkg.com/react-native-sound-player/-/react-native-sound-player-0.10.7.tgz#647922b9820c41840e821436521848d8562cd163"
@@ -7142,6 +7147,13 @@ react-native@0.64.0:
     use-subscription "^1.0.0"
     whatwg-fetch "^3.0.0"
     ws "^6.1.4"
+
+react-navigation-shared-element@^5.0.0-alpha1:
+  version "5.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/react-navigation-shared-element/-/react-navigation-shared-element-5.0.0-alpha1.tgz#29f2090d3f0eef626df93b8572ce5c192d5c46f2"
+  integrity sha512-zPlpvUV6RGsZv3lTDanIN3ARvqABHDrqIOKcD6NpUKXarua8F2kukJ0MqD0Py+oZR3e5ksjDHAISDU05iGmPwQ==
+  dependencies:
+    hoist-non-react-statics "^3.3.2"
 
 react-refresh@^0.4.0:
   version "0.4.3"

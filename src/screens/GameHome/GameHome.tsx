@@ -21,6 +21,7 @@ import Animated, {
 import SoundPlayer from 'react-native-sound-player';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
+import {SharedElement} from 'react-navigation-shared-element';
 
 // importing globals
 import Constants from '../../Constant';
@@ -44,7 +45,7 @@ const GameHome = (props: GameHomeParams) => {
         duration: 1000,
         easing: Easing.ease,
       },
-      (d1) => {
+      d1 => {
         if (d1) {
           onPlay.value = withTiming(
             1,
@@ -52,7 +53,7 @@ const GameHome = (props: GameHomeParams) => {
               duration: 1000,
               easing: Easing.ease,
             },
-            (d2) => {
+            d2 => {
               if (d2) {
                 runOnJS(props.navigation.navigate)('Play');
               }
@@ -65,18 +66,7 @@ const GameHome = (props: GameHomeParams) => {
 
   const onLeaderBoardPress = () => {
     SoundPlayer.playSoundFile('die', 'wav');
-    onLoad.value = withTiming(
-      2,
-      {
-        duration: 1000,
-        easing: Easing.ease,
-      },
-      (done) => {
-        if (done) {
-          runOnJS(props.navigation.navigate)('LeaderBoard');
-        }
-      },
-    );
+    props.navigation.navigate('LeaderBoard');
   };
 
   const onExitApp = () => {
@@ -87,7 +77,7 @@ const GameHome = (props: GameHomeParams) => {
         duration: 1000,
         easing: Easing.ease,
       },
-      (d1) => {
+      d1 => {
         if (d1) {
           onPlay.value = withTiming(
             -1,
@@ -95,7 +85,7 @@ const GameHome = (props: GameHomeParams) => {
               duration: 1000,
               easing: Easing.ease,
             },
-            (d2) => {
+            d2 => {
               if (d2) {
                 runOnJS(BackHandler.exitApp)();
               }
@@ -132,23 +122,7 @@ const GameHome = (props: GameHomeParams) => {
     });
 
     props.navigation.addListener('focus', () => {
-      console.log('Focused');
       SoundPlayer.playSoundFile('point', 'wav');
-      onPlay.value = withTiming(
-        0,
-        {
-          duration: 500,
-          easing: Easing.ease,
-        },
-        (done) => {
-          if (done) {
-            onLoad.value = withTiming(1, {
-              duration: 1000,
-              easing: Easing.bounce,
-            });
-          }
-        },
-      );
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -166,19 +140,9 @@ const GameHome = (props: GameHomeParams) => {
       [Constants.MAX_WIDTH, 0, -Constants.MAX_WIDTH / 4],
       Extrapolate.CLAMP,
     );
-    const scaleBird = interpolate(
-      onPlay.value,
-      [0, 1],
-      [2, 1],
-      Extrapolate.CLAMP,
-    );
 
     return {
-      transform: [
-        {translateY: translateBirdY},
-        {translateX: translateBirdX},
-        {scale: scaleBird},
-      ],
+      transform: [{translateY: translateBirdY}, {translateX: translateBirdX}],
     };
   });
 
@@ -202,11 +166,13 @@ const GameHome = (props: GameHomeParams) => {
         resizeMode="stretch"
       />
       <Animated.View style={[styles.birdImage, animatedBirdStyles]}>
-        <Image
-          source={require('../../../assets/bird.png')}
-          resizeMode="contain"
-          style={[styles.birdImage]}
-        />
+        <SharedElement id="flappyBirdImage">
+          <Image
+            source={require('../../../assets/bird.png')}
+            resizeMode="contain"
+            style={[styles.birdImage]}
+          />
+        </SharedElement>
       </Animated.View>
       <Animated.View style={[styles.buttonContainer, animatedButtonStyles]}>
         <TouchableOpacity style={styles.button} onPress={() => onPlayApp()}>
@@ -256,6 +222,8 @@ const styles = StyleSheet.create({
   },
   birdImage: {
     alignSelf: 'center',
+    width: Constants.BIRD_IMAGE_WIDTH,
+    height: Constants.BIRD_IMAGE_HEIGHT,
   },
   buttonContainer: {
     position: 'absolute',

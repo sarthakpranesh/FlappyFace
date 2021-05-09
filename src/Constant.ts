@@ -9,6 +9,8 @@ const Constants = {
   BIRD_WIDTH: 34,
   BIRD_HEIGHT: 24,
   FLOOR_HEIGHT: 30,
+  BIRD_IMAGE_WIDTH: 100,
+  BIRD_IMAGE_HEIGHT: 100,
 };
 
 export default Constants;
