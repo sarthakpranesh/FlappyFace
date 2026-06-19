@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-native-gengine": {
+      "signature": "7cf18b81ce96f2e384ebc7ae93f5b73f",
+      "file": true
+    }
+  }
+}

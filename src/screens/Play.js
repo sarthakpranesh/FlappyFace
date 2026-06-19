@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {PureComponent} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import SoundPlayer from 'react-native-sound-player';
+import React, { PureComponent } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import Sound from 'react-native-sound';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 //importing other files and libs
 import Constants from '../Constant.js'; //setup some fixed properties in the file
-import {GameEngine} from 'react-native-game-engine'; //game engine for our app
+// import { GameEngine } from 'react-native-game-engine'; //game engine for our app
 
 //importing actual objects, these components are used to display different spaces on the screen
 import Bird from '../components/Bird.js';
@@ -24,6 +24,23 @@ import {
 
 import Styles from '../Styles.js';
 
+// Enable playback in silence mode (important for iOS)
+Sound.setCategory('Playback');
+
+// Load a sound file from the app bundle
+const point = new Sound('point', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('Failed to load the sound', error);
+    return;
+  }
+});
+const hit = new Sound('hit', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('Failed to load the sound', error);
+    return;
+  }
+});
+
 export default class Play extends PureComponent {
   constructor(props) {
     super(props);
@@ -37,13 +54,8 @@ export default class Play extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    SoundPlayer.loadSoundFile('point', 'wav');
-    SoundPlayer.loadSoundFile('hit', 'wav');
-  }
-
   updateUserScore = score => {
-    const {uid} = this.state;
+    const { uid } = this.state;
     firestore()
       .collection('leaderboard')
       .doc(uid)
@@ -52,22 +64,16 @@ export default class Play extends PureComponent {
         if (snap.exists) {
           const data = snap.data();
           if (data.score < score) {
-            firestore()
-              .collection('leaderboard')
-              .doc(uid)
-              .update({
-                score,
-              });
+            firestore().collection('leaderboard').doc(uid).update({
+              score,
+            });
           }
           return;
         } else {
-          firestore()
-            .collection('leaderboard')
-            .doc(uid)
-            .set({
-              name: auth().currentUser.displayName,
-              score,
-            });
+          firestore().collection('leaderboard').doc(uid).set({
+            name: auth().currentUser.displayName,
+            score,
+          });
         }
       })
       .catch(e => {
@@ -99,11 +105,11 @@ export default class Play extends PureComponent {
     ];
 
     return {
-      1: {position: bird, renderer: <Bird />, name: 'bird', pose: 0},
-      2: {position: floor1, renderer: <Floor />, name: 'floor'},
-      3: {position: floor2, renderer: <Floor />, name: 'floor'},
-      4: {position: pipe1, renderer: <Pipe />, name: 'pipe'},
-      5: {position: pipe2, renderer: <Pipe />, name: 'pipe'},
+      1: { position: bird, renderer: <Bird />, name: 'bird', pose: 0 },
+      2: { position: floor1, renderer: <Floor />, name: 'floor' },
+      3: { position: floor2, renderer: <Floor />, name: 'floor' },
+      4: { position: pipe1, renderer: <Pipe />, name: 'pipe' },
+      5: { position: pipe2, renderer: <Pipe />, name: 'pipe' },
     };
   };
 
@@ -112,9 +118,9 @@ export default class Play extends PureComponent {
       this.setState({
         score: this.state.score + 1,
       });
-      SoundPlayer.playSoundFile('point', 'wav');
+      point.play();
     } else if (e.type === 'game-over') {
-      SoundPlayer.playSoundFile('hit', 'wav');
+      hit.play();
       stopGame();
       this.setState({
         running: false, //on collision we stop the game
@@ -141,7 +147,7 @@ export default class Play extends PureComponent {
           style={styles.backgroundImage}
           resizeMode="stretch"
         />
-        <GameEngine
+        {/* <GameEngine
           ref={ref => {
             this.gameEngine = ref;
           }}
@@ -150,7 +156,7 @@ export default class Play extends PureComponent {
           entities={this.entities}
           onEvent={this.onEvent}
           running={this.state.running}
-        />
+        />*/}
         <Text style={[styles.score, Styles.fontExtraLarge]}>
           {this.state.score}
         </Text>
@@ -164,12 +170,13 @@ export default class Play extends PureComponent {
                 Try Again
               </Text>
             </TouchableOpacity>
-            <View style={{position: 'absolute', bottom: 10}}>
+            <View style={{ position: 'absolute', bottom: 10 }}>
               <TouchableOpacity
                 onPress={() => {
                   this.reset();
                   this.props.navigation.goBack();
-                }}>
+                }}
+              >
                 <Text style={[styles.closeBtn, Styles.fontLarge]}>x</Text>
               </TouchableOpacity>
             </View>
@@ -212,7 +219,7 @@ const styles = StyleSheet.create({
     top: 30,
     alignSelf: 'center',
     textShadowColor: '#444444',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 2,
     zIndex: 100,
   },

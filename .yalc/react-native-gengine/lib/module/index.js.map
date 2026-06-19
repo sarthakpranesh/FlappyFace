@@ -1,0 +1,1 @@
+{"version":3,"names":["gameState","GameEngine","SkiaRenderer","DefaultTimer","compileEntities"],"sourceRoot":"../../src","sources":["index.tsx"],"mappings":";;AAAA,OAAOA,SAAS,MAAM,iCAA8B;AACpD,SACEC,UAAU,EACVC,YAAY,EACZC,YAAY,EACZC,eAAe,QACV,mBAAgB;AAEvB,SAASH,UAAU,EAAEC,YAAY,EAAEC,YAAY,EAAEC,eAAe,EAAEJ,SAAS","ignoreList":[]}

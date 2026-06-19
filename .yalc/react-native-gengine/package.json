@@ -1,0 +1,141 @@
+{
+  "name": "react-native-gengine",
+  "version": "0.1.0",
+  "description": "Next generation game engine using worklets and reanimated",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-gengine-example",
+    "clean": "del-cli lib",
+    "typecheck": "tsc",
+    "test": "jest",
+    "release": "release-it --only-version",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "localPublish": "yarn prepare && npx yalc publish --push --private --no-scripts"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarthakpranesh/react-native-gengine.git"
+  },
+  "author": "Sarthak Pranesh <sarthakpranesh08@gmail.com> (https://github.com/sarthakpranesh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sarthakpranesh/react-native-gengine/issues"
+  },
+  "homepage": "https://github.com/sarthakpranesh/react-native-gengine#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@shopify/react-native-skia": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*",
+    "react-native-worklets": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "languages": "js",
+    "tools": [
+      "jest",
+      "lefthook",
+      "release-it",
+      "eslint"
+    ],
+    "version": "0.57.0"
+  },
+  "yalcSig": "7cf18b81ce96f2e384ebc7ae93f5b73f"
+}

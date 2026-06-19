@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
-import {View, Image, StyleSheet, ToastAndroid, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, Image, StyleSheet, ToastAndroid, Text } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
-} from '@react-native-community/google-signin';
+} from '@react-native-google-signin/google-signin';
+
+// Google sign in configure
 GoogleSignin.configure({
   webClientId:
     '831535281165-raapdh2a3l20d64qvrfkdi3co1s96utr.apps.googleusercontent.com',
@@ -22,10 +24,11 @@ export default class UserStarting extends Component {
   async onContinueWithGoogle() {
     try {
       await GoogleSignin.hasPlayServices();
-      const {idToken} = await GoogleSignin.signIn();
+      const { idToken } = await GoogleSignin.signIn();
       const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
       return auth().signInWithCredential(googleCredentials);
     } catch (error) {
+      console.log('onContinueWithGoogle', error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         ToastAndroid.show('User Cancelled Sign In', ToastAndroid.SHORT);
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -40,8 +43,6 @@ export default class UserStarting extends Component {
           'We are having Network issues :<',
           ToastAndroid.SHORT,
         );
-      } else {
-        console.log(error.message);
       }
     }
   }
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     height: Constants.MAX_HEIGHT,
-    transform: [{scale: 2}],
+    transform: [{ scale: 2 }],
     zIndex: 2,
   },
   gameName: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.MAX_WIDTH / 14,
     fontFamily: 'cusFont',
     textShadowColor: 'black',
-    textShadowOffset: {width: 8, height: 8},
+    textShadowOffset: { width: 8, height: 8 },
     elevation: 4,
     zIndex: 2,
   },

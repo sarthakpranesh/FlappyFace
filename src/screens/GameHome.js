@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -11,15 +11,27 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import SoundPlayer from 'react-native-sound-player';
+import Sound from 'react-native-sound';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import Constants from '../Constant.js';
 
 import Styles from '../Styles.js';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
+const point = new Sound('point', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('Failed to load the sound', error);
+    return;
+  }
+});
+const die = new Sound('die', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('Failed to load the sound', error);
+    return;
+  }
+});
 
 export default class GameHome extends Component {
   constructor(props) {
@@ -58,7 +70,7 @@ export default class GameHome extends Component {
     }).start();
 
     this.props.navigation.addListener('focus', () => {
-      SoundPlayer.playSoundFile('point', 'wav');
+      point.play();
       Animated.timing(this.onPlay, {
         duration: 500,
         toValue: 0,
@@ -75,7 +87,7 @@ export default class GameHome extends Component {
   }
 
   onPlayApp() {
-    SoundPlayer.playSoundFile('die', 'wav');
+    die.play();
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 0,
@@ -92,7 +104,7 @@ export default class GameHome extends Component {
   }
 
   onLeaderBoardPress() {
-    SoundPlayer.playSoundFile('die', 'wav');
+    die.play();
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 2,
@@ -103,7 +115,7 @@ export default class GameHome extends Component {
   }
 
   onExitApp() {
-    SoundPlayer.playSoundFile('die', 'wav');
+    die.play();
     Animated.timing(this.onLoad, {
       duration: 1000,
       toValue: 0,
@@ -132,9 +144,9 @@ export default class GameHome extends Component {
             auth().signOut();
           },
         },
-        {text: 'No'},
+        { text: 'No' },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
 
@@ -153,35 +165,40 @@ export default class GameHome extends Component {
             styles.birdImage,
             {
               transform: [
-                {translateY: this.translateBirdY},
-                {translateX: this.translateBirdX},
-                {scale: this.scaleBird},
+                { translateY: this.translateBirdY },
+                { translateX: this.translateBirdX },
+                { scale: this.scaleBird },
               ],
             },
           ]}
         />
         <Animated.View
-          style={[styles.buttonContainer, {opacity: this.buttonOpacity}]}>
+          style={[styles.buttonContainer, { opacity: this.buttonOpacity }]}
+        >
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onPlayApp()}>
+            onPress={() => this.onPlayApp()}
+          >
             <Text style={[styles.buttonText, Styles.fontSmall]}>Play</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onLeaderBoardPress()}>
+            onPress={() => this.onLeaderBoardPress()}
+          >
             <Text style={[styles.buttonText, Styles.fontSmall]}>
               Leaderboard
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onExitApp()}>
+            onPress={() => this.onExitApp()}
+          >
             <Text style={[styles.buttonText, Styles.fontSmall]}>Exit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.onLogout()}>
+            onPress={() => this.onLogout()}
+          >
             <Text style={[styles.buttonText, Styles.fontSmall]}>LogOut</Text>
           </TouchableOpacity>
         </Animated.View>
